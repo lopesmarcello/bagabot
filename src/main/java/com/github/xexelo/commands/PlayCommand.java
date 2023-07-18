@@ -27,7 +27,7 @@ public class PlayCommand extends ServerCommand {
 
     @Override
     protected void runCommand(MessageCreateEvent event, Server server, ServerTextChannel channel, User user, String[] args) {
-        // Make sure the message have arguments above one (for example: play kano 2020 remix or play https://youtube.com/...).
+        // Make sure the message have arguments above one (for example: b.play hino do corinthians or play https://youtube.com/...).
         if (args.length > 1) {
 
             // We first check if the user is in any voice channel.
@@ -38,7 +38,6 @@ public class PlayCommand extends ServerCommand {
 
                     // We retrieve the ServerMusicManager from the AudioManager class which will create it if it doesn't exist
                     ServerMusicManager m = AudioManager.get(server.getId());
-
                     // We retrieve the URL or the query
                     String query = event.getMessageContent().replace(args[0] + " ", "");
 

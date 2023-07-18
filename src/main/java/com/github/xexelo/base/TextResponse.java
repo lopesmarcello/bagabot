@@ -2,21 +2,21 @@ package com.github.xexelo.base;
 
 public class TextResponse {
     public static final String notInTheSameChannelMessage =
-            "You're not connected in the same channel as the bot.";
+            "Você não está no mesmo canal que o bot, malandro";
     public static final String cannotConnectSeeOrSpeakInTheChannelMessage =
-            "Either I cannot connect, cannot see, or do not have the permissions to speak on the channel.";
+            "Não tenho permissão para me conectar, ver, ou falar no canal.";
     public static final String userNotConnectedInAnyVoiceChannelMessage =
-            "You are not connected in any voice channel.";
+            "Tá chapando? Você nem tá em um canal de áudio mano...";
     public static final String botIsntPlayingMusicMessage =
-            "The bot don't seem to be playing any music...";
+            "Bola outro não cria, o bot nem tá tocando nada.";
 
     public static final String botIsntInAnyVoiceChannelMessage =
-            "The bot does not seem to be in any voice channel.";
+            "Bola outro não cria, o bot nem tá em um canal de voz.";
 
-    public static final String trackNotFoundMessage = "Couldn't find the track.";
+    public static final String trackNotFoundMessage ="Não achei " + "\uD83D\uDE10";
 
-    public static final String skipTrackPrefix = "Skipped: ";
+    public static final String skipTrackPrefix = "Pulei: ";
 
-    public static final String stopTrackSufix = " has stopped.";
+    public static final String stopTrackSufix = " parou.";
 
 }

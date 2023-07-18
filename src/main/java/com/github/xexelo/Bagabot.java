@@ -1,10 +1,8 @@
 package com.github.xexelo;
 
 import com.github.xexelo.audio.PlayerManager;
-import com.github.xexelo.commands.LeaveCommand;
-import com.github.xexelo.commands.PlayCommand;
-import com.github.xexelo.commands.SkipCommand;
-import com.github.xexelo.commands.StopCommand;
+import com.github.xexelo.commands.*;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
@@ -14,7 +12,8 @@ import org.javacord.api.util.logging.FallbackLoggerConfiguration;
 public class Bagabot {
 
     public static void main(String[] args) {
-        String token = "MTEzMDY5MjE5MTE3MDMzNDgzMA.GVI9qu.aQGowEzW0Jai_p2PQjSmEuFH6sWa85tgOwdRuc";
+        Dotenv dotenv = Dotenv.load();
+        String token = dotenv.get("DISCORD_BOT_TOKEN");
 
         // Setup Loggers
         FallbackLoggerConfiguration.setTrace(true);
@@ -45,10 +44,15 @@ public class Bagabot {
         api.setReconnectDelay(attempt -> attempt * 2);
 
         // Adds all the commands
-        api.addListener(new PlayCommand());
-        api.addListener(new StopCommand());
-        api.addListener(new SkipCommand());
+        api.addListener(new ClearCommand());
+        api.addListener(new F1Command());
+        api.addListener(new HelpCommand());
         api.addListener(new LeaveCommand());
+        api.addListener(new NowPlayingCommand());
+        api.addListener(new PlayCommand());
+        api.addListener(new QueueCommand());
+        api.addListener(new SkipCommand());
+        api.addListener(new StopCommand());
 
         // Prints out the bot is up and running.
         System.out.println("O bot está online!");
