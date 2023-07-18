@@ -14,7 +14,6 @@ import org.javacord.api.util.logging.FallbackLoggerConfiguration;
 public class Bagabot {
 
     public static void main(String[] args) {
-        // TODO: mover token pra ENV
         String token = "MTEzMDY5MjE5MTE3MDMzNDgzMA.GVI9qu.aQGowEzW0Jai_p2PQjSmEuFH6sWa85tgOwdRuc";
 
         // Setup Loggers
@@ -50,7 +49,6 @@ public class Bagabot {
         api.addListener(new StopCommand());
         api.addListener(new SkipCommand());
         api.addListener(new LeaveCommand());
-        // TODO: QueueCommand
 
         // Prints out the bot is up and running.
         System.out.println("O bot está online!");

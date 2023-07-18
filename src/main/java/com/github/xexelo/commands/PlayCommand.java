@@ -4,10 +4,12 @@ import com.github.xexelo.audio.AudioManager;
 import com.github.xexelo.audio.LavaplayerAudioSource;
 import com.github.xexelo.audio.PlayerManager;
 import com.github.xexelo.audio.ServerMusicManager;
+import com.github.xexelo.base.MusicPlayerEmbed;
 import com.github.xexelo.base.ServerCommand;
 import com.github.xexelo.base.TextResponse;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import org.javacord.api.audio.AudioSource;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.server.Server;
@@ -87,19 +89,18 @@ public class PlayCommand extends ServerCommand {
         // Load the track, we use isUrl to see if the argument is a URl, otherwise if it is not then we use YouTube Search to search the query
         manager.loadItemOrdered(m, isUrl(query) ? query : "ytsearch: " + query, new FunctionalResultHandler(audioTrack -> {
             // This is for track loaded.
-            channel.sendMessage(TextResponse.addTrackPrefix + audioTrack.getInfo().title);
+            channel.sendMessage(MusicPlayerEmbed.build(audioTrack));
             m.scheduler.queue(audioTrack);
         }, audioPlaylist -> {
             // If the playlist is a search result, then we only need to get the first one.
             if (audioPlaylist.isSearchResult()){
-                m.scheduler.queue(audioPlaylist.getTracks().get(0));
-                channel.sendMessage(TextResponse.addTrackPrefix + audioPlaylist.getTracks().get(0).getInfo().title);
+                AudioTrack track = audioPlaylist.getTracks().get(0);
+                m.scheduler.queue(track);
+                channel.sendMessage(MusicPlayerEmbed.build(track));
             } else {
                 // If it isn`t then simply queue every track
-                audioPlaylist.getTracks().forEach(audioTrack -> {
-                    m.scheduler.queue(audioTrack);
-                    channel.sendMessage(TextResponse.addTrackPrefix + audioTrack.getInfo().title);
-                });
+                audioPlaylist.getTracks().forEach(m.scheduler::queue);
+                channel.sendMessage("Added " + audioPlaylist.getTracks().size() + " songs to the queue");
             }
         }, () -> {
             // if there are no matches, then we tell the user that we couldn't find any track.
