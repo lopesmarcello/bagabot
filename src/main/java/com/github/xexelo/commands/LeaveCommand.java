@@ -2,6 +2,7 @@ package com.github.xexelo.commands;
 
 import com.github.xexelo.audio.AudioManager;
 import com.github.xexelo.base.ServerCommand;
+import com.github.xexelo.base.TextResponse;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
@@ -20,7 +21,7 @@ public class LeaveCommand extends ServerCommand {
             server.getAudioConnection().ifPresentOrElse(audioConnection -> {
                 AudioManager.get(server.getId()).player.stopTrack();
                 audioConnection.close();
-            }, () -> event.getChannel().sendMessage("The bot does not seem to be in any voice channel"));
-        }, () -> event.getChannel().sendMessage("The bot does not seem to be in any voice channel."));
+            }, () -> event.getChannel().sendMessage(TextResponse.botIsntInAnyVoiceChannelMessage));
+        }, () -> event.getChannel().sendMessage(TextResponse.botIsntInAnyVoiceChannelMessage));
     }
 }

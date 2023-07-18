@@ -1,7 +1,9 @@
 package com.github.xexelo.commands;
 
 import com.github.xexelo.audio.AudioManager;
+import com.github.xexelo.audio.ServerMusicManager;
 import com.github.xexelo.base.ServerCommand;
+import com.github.xexelo.base.TextResponse;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
@@ -19,9 +21,11 @@ public class StopCommand extends ServerCommand {
         server.getAudioConnection().ifPresentOrElse(audioConnection -> {
 
             // If there is an audio connection, then we stop the music.
-            AudioManager.get(server.getId()).player.stopTrack();
-            event.getChannel().sendMessage("The track stopped.");
+            ServerMusicManager manager = AudioManager.get(server.getId());
+            String currentTrackTitle = manager.player.getPlayingTrack().getInfo().title;
+            manager.player.stopTrack();
+            event.getChannel().sendMessage(currentTrackTitle + TextResponse.stopTrackSufix);
 
-        }, () -> event.getChannel().sendMessage("The bot isn't playing music."));
+        }, () -> event.getChannel().sendMessage(TextResponse.botIsntPlayingMusicMessage));
     }
 }

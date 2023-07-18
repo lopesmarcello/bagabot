@@ -3,6 +3,7 @@ package com.github.xexelo.commands;
 import com.github.xexelo.audio.AudioManager;
 import com.github.xexelo.audio.ServerMusicManager;
 import com.github.xexelo.base.ServerCommand;
+import com.github.xexelo.base.TextResponse;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
@@ -23,7 +24,7 @@ public class SkipCommand extends ServerCommand {
             ServerMusicManager audioManager = AudioManager.get(server.getId());
             String currentTrackTitle = audioManager.player.getPlayingTrack().getInfo().title;
             audioManager.scheduler.nextTrack();
-            event.getChannel().sendMessage("we skipped " + currentTrackTitle);
-        }, () -> event.getChannel().sendMessage("The bot don't seem to be playing any music..."));
+            event.getChannel().sendMessage(TextResponse.skipTrackPrefix + currentTrackTitle);
+        }, () -> event.getChannel().sendMessage(TextResponse.botIsntPlayingMusicMessage));
     }
 }

@@ -5,6 +5,7 @@ import com.github.xexelo.audio.LavaplayerAudioSource;
 import com.github.xexelo.audio.PlayerManager;
 import com.github.xexelo.audio.ServerMusicManager;
 import com.github.xexelo.base.ServerCommand;
+import com.github.xexelo.base.TextResponse;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler;
 import org.javacord.api.audio.AudioSource;
@@ -63,16 +64,16 @@ public class PlayCommand extends ServerCommand {
                                 // Plays the music
                                 play(query, channel, m);
                             } else {
-                                event.getChannel().sendMessage("Você não está conectado no mesmo canal que o bot.");
+                                event.getChannel().sendMessage(TextResponse.notInTheSameChannelMessage);
                             }
                         });
                     }
 
                 } else {
                     // Tell the user that we cannot connect or see or speak in the channel
-                    event.getChannel().sendMessage("Either I cannot connect, cannot see, or do not have the permissions to speak on the channel.");
+                    event.getChannel().sendMessage(TextResponse.cannotConnectSeeOrSpeakInTheChannelMessage);
                 }
-            }, () -> event.getChannel().sendMessage("You are not connected in any voice channel."));
+            }, () -> event.getChannel().sendMessage(TextResponse.userNotConnectedInAnyVoiceChannelMessage));
         }
     }
 
@@ -86,26 +87,26 @@ public class PlayCommand extends ServerCommand {
         // Load the track, we use isUrl to see if the argument is a URl, otherwise if it is not then we use YouTube Search to search the query
         manager.loadItemOrdered(m, isUrl(query) ? query : "ytsearch: " + query, new FunctionalResultHandler(audioTrack -> {
             // This is for track loaded.
-            channel.sendMessage("Added the track: " + audioTrack.getInfo().title);
+            channel.sendMessage(TextResponse.addTrackPrefix + audioTrack.getInfo().title);
             m.scheduler.queue(audioTrack);
         }, audioPlaylist -> {
             // If the playlist is a search result, then we only need to get the first one.
             if (audioPlaylist.isSearchResult()){
                 m.scheduler.queue(audioPlaylist.getTracks().get(0));
-                channel.sendMessage("Added the track: " + audioPlaylist.getTracks().get(0).getInfo().title);
+                channel.sendMessage(TextResponse.addTrackPrefix + audioPlaylist.getTracks().get(0).getInfo().title);
             } else {
                 // If it isn`t then simply queue every track
                 audioPlaylist.getTracks().forEach(audioTrack -> {
                     m.scheduler.queue(audioTrack);
-                    channel.sendMessage("Added the track: " + audioTrack.getInfo().title);
+                    channel.sendMessage(TextResponse.addTrackPrefix + audioTrack.getInfo().title);
                 });
             }
         }, () -> {
             // if there are no matches, then we tell the user that we couldn't find any track.
-            channel.sendMessage("Couldn't find the track.");
+            channel.sendMessage(TextResponse.trackNotFoundMessage);
         }, e-> {
             //in case of exception
-            channel.sendMessage("Couldn't play the track:\n" + e.getMessage());
+            channel.sendMessage("ERROR:\n" + e.getMessage());
         }));
     }
 
