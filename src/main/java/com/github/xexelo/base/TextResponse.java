@@ -15,7 +15,6 @@ public class TextResponse {
 
     public static final String trackNotFoundMessage = "Couldn't find the track.";
 
-    public static final String addTrackPrefix = "Added the track: ";
     public static final String skipTrackPrefix = "Skipped: ";
 
     public static final String stopTrackSufix = " has stopped.";
