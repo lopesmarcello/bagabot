@@ -88,14 +88,14 @@ public class PlayCommand extends ServerCommand {
         // Load the track, we use isUrl to see if the argument is a URl, otherwise if it is not then we use YouTube Search to search the query
         manager.loadItemOrdered(m, isUrl(query) ? query : "ytsearch: " + query, new FunctionalResultHandler(audioTrack -> {
             // This is for track loaded.
-            channel.sendMessage(MusicPlayerEmbed.build(audioTrack));
+            channel.sendMessage(MusicPlayerEmbed.build(audioTrack, m.scheduler.getQueue()));
             m.scheduler.queue(audioTrack);
         }, audioPlaylist -> {
             // If the playlist is a search result, then we only need to get the first one.
             if (audioPlaylist.isSearchResult()){
                 AudioTrack track = audioPlaylist.getTracks().get(0);
                 m.scheduler.queue(track);
-                channel.sendMessage(MusicPlayerEmbed.build(track));
+                channel.sendMessage(MusicPlayerEmbed.build(track, m.scheduler.getQueue()));
             } else {
                 // If it isn`t then simply queue every track
                 audioPlaylist.getTracks().forEach(m.scheduler::queue);

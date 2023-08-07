@@ -26,6 +26,6 @@ public class NowPlayingCommand extends ServerCommand {
             return;
         }
 
-        channel.sendMessage(MusicPlayerEmbed.build(track));
+        channel.sendMessage(MusicPlayerEmbed.build(track, manager.scheduler.getQueue()));
     }
 }
