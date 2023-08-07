@@ -26,4 +26,8 @@ Todas as mensagens e interações com o bot vem do seu respectivo server.
 ### Melhorias:
 [ ] - Fazer uma versão de cada comando em "slash commands".
 
+[ ] - Configurar Listener onTrackStart (para mostrar a nova musica)
+
 [ ] - Melhorar as mensagens de resposta e Embeds.
+
+[ ] - Configurar URL spotify etc
